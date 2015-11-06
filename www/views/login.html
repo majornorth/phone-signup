@@ -1,0 +1,28 @@
+<ion-pane class="login-page">
+  <ion-content scroll="false">
+    <div class="login-container">
+      <div class="login-top">
+        <img src="img/logo.png" />
+        <div class="list">
+          <h3>What's your number?</h3>
+          <p>Don't worry, we'll never display it publicly.</p>
+          <form name="form" ng-submit="vm.sendConfirmationCode()">
+            <div>
+              <label class="item item-input item-country-code" ng-click="vm.openCountrySelectorModal()">
+                <div class="countrycode">+{{vm.country.intlPrefix}}<div class="arrow-down"></div></div>
+              </label>
+              <label class="item item-input item-phonenumber item-icon-right">
+                <i class="icon ion-ios-checkmark placeholder-icon" ng-class="{'phonenumber-valid': (vm.phonenumber.length && form.phonenumber.$valid)}"></i>
+                <input type="tel" id="phonenumber" name="phonenumber" ng-model="vm.phonenumber" placeholder="Phone number" phone-number country-code="vm.country.countryCode">
+              </label>
+            </div>
+            <button class="button button-block button-outline button-light" type="submit" ng-disabled="!vm.phonenumber.length || form.phonenumber.$invalid">
+                NEXT
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="login-disclaimer hide-on-keyboard-open">By clicking "Next" you agree to our <a ui-sref="tos">Terms of Use</a> and <a ui-sref="privacy">Privacy Policy</a>.</div>
+    </div>
+  </ion-content>
+</ion-pane>
