@@ -5,9 +5,9 @@
         .module('starter')
         .service('loginService', loginService);
 
-    loginService.$inject = ['$q', '$timeout', '$window'];
+    loginService.$inject = ['$q', '$timeout', '$window', '$firebaseArray'];
 
-    function loginService($q, $timeout, $window) {
+    function loginService($q, $timeout, $window, $firebaseArray) {
 
         var phonenumber;
         var countryCode;
@@ -33,6 +33,53 @@
             $timeout(function() {
                 // REPLACE THIS CODE TO SEND THE PHONENUMBER
                 // AND THE COUNTRYCODE TO YOUR SERVER
+                var verificationCode = Math.floor(Math.random()*999999);
+
+                var usersRef = new Firebase('https://soccersubs.firebaseio.com/users/');
+                var usersArray = $firebaseArray(usersRef);
+
+                var number = getFormattedNumber();
+
+                checkIfUserExists(number);
+
+                // // Tests to see if /users/<userId> has any data.
+                function checkIfUserExists(number) {
+                    // var usersRef = new Firebase(usersRef);
+                    usersRef.child(number).once('value', function(snapshot) {
+                      var exists = (snapshot.val() !== null);
+                      userExistsCallback(number, exists);
+                    });
+                }
+
+                function userExistsCallback(number, exists) {
+                    if (exists) {
+                      return
+                    } else {
+                      // create a new account
+                      var newUserUrl = 'https://soccersubs.firebaseio.com/users/' + number;
+                      var newUserRef = new Firebase(newUserUrl);
+                      // console.log(newUserRef);
+                      // var newUserArray = $firebaseArray(newUserRef);
+
+                      newUserRef.set({
+                        firstName: '',
+                        lastName: '',
+                        position: '',
+                        skill: '',
+                        verificationCode: ''
+                      });
+                    }
+                }
+
+                // var confirmRef = new Firebase('https://soccersubs.firebaseio.com/confirm-user/');
+                // var confirmQueue = $firebaseArray(confirmRef);
+
+                // confirmQueue.$add({
+                // name: 'Stewart',
+                // phone: '15157080626',
+                //   text: message
+                // });
+
                 deferred.resolve();
             }, 1000);
             return deferred.promise;
