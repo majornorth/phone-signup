@@ -33,18 +33,18 @@
             $timeout(function() {
                 // REPLACE THIS CODE TO SEND THE PHONENUMBER
                 // AND THE COUNTRYCODE TO YOUR SERVER
-                var verificationCode = Math.floor(Math.random()*999999);
 
                 var usersRef = new Firebase('https://soccersubs.firebaseio.com/users/');
                 var usersArray = $firebaseArray(usersRef);
+
+                var verificationCode = Math.floor(Math.random()*9999);
 
                 var number = getFormattedNumber();
 
                 checkIfUserExists(number);
 
-                // // Tests to see if /users/<userId> has any data.
+                // Tests to see if /users/<userId> has any data.
                 function checkIfUserExists(number) {
-                    // var usersRef = new Firebase(usersRef);
                     usersRef.child(number).once('value', function(snapshot) {
                       var exists = (snapshot.val() !== null);
                       userExistsCallback(number, exists);
@@ -56,29 +56,28 @@
                       return
                     } else {
                       // create a new account
-                      var newUserUrl = 'https://soccersubs.firebaseio.com/users/' + number;
+                      var cleanNum = number.replace(/[^a-zA-Z0-9 ]/g, "");
+                      var userId = '%2B' + cleanNum;
+                      var newUserUrl = 'https://soccersubs.firebaseio.com/users/' + userId;
                       var newUserRef = new Firebase(newUserUrl);
-                      // console.log(newUserRef);
-                      // var newUserArray = $firebaseArray(newUserRef);
 
                       newUserRef.set({
                         firstName: '',
                         lastName: '',
                         position: '',
                         skill: '',
-                        verificationCode: ''
+                        verificationCode: verificationCode
+                      });
+
+                      var confirmRef = new Firebase('https://soccersubs.firebaseio.com/verification_queue/');
+                      var confirmQueue = $firebaseArray(confirmRef);
+
+                      confirmQueue.$add({
+                          phone: number,
+                          verificationCode: verificationCode
                       });
                     }
                 }
-
-                // var confirmRef = new Firebase('https://soccersubs.firebaseio.com/confirm-user/');
-                // var confirmQueue = $firebaseArray(confirmRef);
-
-                // confirmQueue.$add({
-                // name: 'Stewart',
-                // phone: '15157080626',
-                //   text: message
-                // });
 
                 deferred.resolve();
             }, 1000);
@@ -91,9 +90,26 @@
                 // REPLACE THIS CODE TO SEND THE CODE TO YOUR SERVER
                 // IN ORDER TO VALIDATE IT
 
-                // Here I need to do a firebase lookup to see if
-                // user already exists and log in if they do else
-                // create new user
+                var usersRef = new Firebase('https://soccersubs.firebaseio.com/users/');
+
+                function verifyUser(code) {
+                    usersRef.child(code).once('value', function(snapshot) {
+                      var verifiedMatch = (snapshot.val() === code);
+                      userVerfiedCallback(code, verifiedMatch);
+                    });
+                }
+
+                verifyUser(code);
+
+                // probably need a callback error here
+                function userVerfiedCallback(code, verifiedMatch) {
+                    if (verifiedMatch) {
+                      return
+                    } else {
+                      alert('yeah right bitch!');
+                    }
+                }
+
                 deferred.resolve();
             }, 1000);
             return deferred.promise;

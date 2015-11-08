@@ -64,8 +64,8 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
     var smsQueue = $firebaseArray(smsRef);
 
     smsQueue.$add({
-    name: 'Stewart',
-    phone: '15157080626',
+      name: 'Stewart',
+      phone: '15157080626',
       text: message
     });
 
