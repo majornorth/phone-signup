@@ -1,6 +1,6 @@
 <ion-pane>
   <ion-header-bar class="bar-stable">
-    <button class="button button-icon icon ion-person">
+    <button class="button button-icon icon ion-person" ng-click="logUserOut()">
     </button>
     <h1 class="title">SoccerSubs</h1>
   </ion-header-bar>
@@ -8,7 +8,7 @@
     <div class="card" ng-controller="Sub.Controller">
       <div class="item">
         <div class="item item-image profile-image">
-            <img src="img/logo.png">
+            <a href="#" ng-click="logUserOut()"><img src="img/logo.png"></a>
         </div>
         <div class="item">
             <h2>Stewart McCoy</h2>

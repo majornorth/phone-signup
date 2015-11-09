@@ -43,7 +43,6 @@
 
                 checkIfUserExists(number);
 
-                // Tests to see if /users/<userId> has any data.
                 function checkIfUserExists(number) {
                     usersRef.child(number).once('value', function(snapshot) {
                       var exists = (snapshot.val() !== null);
@@ -53,7 +52,24 @@
 
                 function userExistsCallback(number, exists) {
                     if (exists) {
-                      return
+
+                        //Abstract below into service
+                        var cleanNum = number.replace(/[^a-zA-Z0-9 ]/g, "");
+                        var userId = '%2B' + cleanNum;
+                        var newUserUrl = 'https://soccersubs.firebaseio.com/users/' + userId;
+                        var newUserRef = new Firebase(newUserUrl);
+
+                        newUserRef.update({
+                            verificationCode: verificationCode
+                        });
+
+                        var confirmRef = new Firebase('https://soccersubs.firebaseio.com/verification_queue/');
+                        var confirmQueue = $firebaseArray(confirmRef);
+
+                        confirmQueue.$add({
+                            phone: number,
+                            verificationCode: verificationCode
+                        });
                     } else {
                       // create a new account
                       var cleanNum = number.replace(/[^a-zA-Z0-9 ]/g, "");
@@ -90,27 +106,40 @@
                 // REPLACE THIS CODE TO SEND THE CODE TO YOUR SERVER
                 // IN ORDER TO VALIDATE IT
 
-                var usersRef = new Firebase('https://soccersubs.firebaseio.com/users/');
+                var number = getFormattedNumber();
+                var cleanNum = number.replace(/[^a-zA-Z0-9 ]/g, "");
+                var userId = '%2B' + cleanNum;
+                var userIdRefUrl = 'https://soccersubs.firebaseio.com/users/' + userId;
+                var userIdRef = new Firebase(userIdRefUrl);
+                var userVerificationCodeRef = userIdRef.child('verificationCode');
+                console.log(userIdRef.toString());
+                console.log(userVerificationCodeRef.toString());
 
                 function verifyUser(code) {
-                    usersRef.child(code).once('value', function(snapshot) {
+                    // console.log(code);
+                    // Code below is not going to work because there could be dupes
+                    userVerificationCodeRef.on('value', function(snapshot) {
                       var verifiedMatch = (snapshot.val() === code);
-                      userVerfiedCallback(code, verifiedMatch);
+                      console.log(snapshot.val());
+                      debugger;
+                      console.log(verifiedMatch);
+
+                      if (verifiedMatch) {
+                        console.log("verfied match!");
+                        deferred.resolve();
+                      } else {
+                        console.log("verfication failed!");
+                        deferred.reject();
+                      }
+                      // userVerfiedCallback(code, verifiedMatch);
                     });
                 }
 
                 verifyUser(code);
 
                 // probably need a callback error here
-                function userVerfiedCallback(code, verifiedMatch) {
-                    if (verifiedMatch) {
-                      return
-                    } else {
-                      alert('yeah right bitch!');
-                    }
-                }
-
-                deferred.resolve();
+                // function userVerfiedCallback(code, verifiedMatch) {
+                // }
             }, 1000);
             return deferred.promise;
         }

@@ -48,10 +48,15 @@
       $ionicLoading.show({
         template: 'Verifying code...'
       });
-      loginService.verifyConfirmationCode(vm.confirmationCode).then(function() {
-        $ionicLoading.hide();
-        return $state.go('home');
-      });
+      loginService.verifyConfirmationCode(vm.confirmationCode)
+        .then(function() {
+          $ionicLoading.hide();
+          return $state.go('home');
+        },
+        function() {
+          $ionicLoading.hide();
+          return $state.go('login');
+        });
     }
 
     /**

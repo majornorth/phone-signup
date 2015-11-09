@@ -40,7 +40,7 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
   });
 })
 
-.controller('Sub.Controller', function($scope, $ionicModal, $firebaseArray) {
+.controller('Sub.Controller', function($scope, $ionicModal, $firebaseArray, $state) {
   // Create modal
   $ionicModal.fromTemplateUrl('new-message.html', function(modal) {
     $scope.messageModal = modal;
@@ -82,4 +82,8 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
   $scope.closeNewMessage = function() {
     $scope.messageModal.hide();
   }
+
+  $scope.logUserOut = function() {
+    $state.go('login');
+  };
 })
