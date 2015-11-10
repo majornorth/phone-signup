@@ -1,11 +1,11 @@
-<ion-pane>
+<ion-pane ng-controller="Sub.Controller">
   <ion-header-bar class="bar-stable">
-    <button class="button button-icon icon ion-person" ng-click="logUserOut()">
+    <button class="button button-icon icon ion-person" ng-click="viewUserProfile()">
     </button>
     <h1 class="title">SoccerSubs</h1>
   </ion-header-bar>
   <ion-content>
-    <div class="card" ng-controller="Sub.Controller">
+    <div class="card">
       <div class="item">
         <div class="item item-image profile-image">
             <a href="#" ng-click="logUserOut()"><img src="img/logo.png"></a>

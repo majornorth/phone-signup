@@ -31,8 +31,6 @@
         function sendConfirmationCode() {
             var deferred = $q.defer();
             $timeout(function() {
-                // REPLACE THIS CODE TO SEND THE PHONENUMBER
-                // AND THE COUNTRYCODE TO YOUR SERVER
 
                 var usersRef = new Firebase('https://soccersubs.firebaseio.com/users/');
                 var usersArray = $firebaseArray(usersRef);
@@ -103,8 +101,6 @@
         function verifyConfirmationCode(code) {
             var deferred = $q.defer();
             $timeout(function() {
-                // REPLACE THIS CODE TO SEND THE CODE TO YOUR SERVER
-                // IN ORDER TO VALIDATE IT
 
                 var number = getFormattedNumber();
                 var cleanNum = number.replace(/[^a-zA-Z0-9 ]/g, "");
@@ -112,34 +108,20 @@
                 var userIdRefUrl = 'https://soccersubs.firebaseio.com/users/' + userId;
                 var userIdRef = new Firebase(userIdRefUrl);
                 var userVerificationCodeRef = userIdRef.child('verificationCode');
-                console.log(userIdRef.toString());
-                console.log(userVerificationCodeRef.toString());
 
                 function verifyUser(code) {
-                    // console.log(code);
-                    // Code below is not going to work because there could be dupes
                     userVerificationCodeRef.on('value', function(snapshot) {
                       var verifiedMatch = (snapshot.val() === code);
-                      console.log(snapshot.val());
-                      debugger;
-                      console.log(verifiedMatch);
 
                       if (verifiedMatch) {
-                        console.log("verfied match!");
                         deferred.resolve();
                       } else {
-                        console.log("verfication failed!");
                         deferred.reject();
                       }
-                      // userVerfiedCallback(code, verifiedMatch);
                     });
                 }
 
                 verifyUser(code);
-
-                // probably need a callback error here
-                // function userVerfiedCallback(code, verifiedMatch) {
-                // }
             }, 1000);
             return deferred.promise;
         }

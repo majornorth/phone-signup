@@ -37,6 +37,10 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
   }).state('privacy', {
     url: '/privacy',
     templateUrl: 'views/privacy.html'
+  }).state('profile', {
+    url: '/profile',
+    templateUrl: 'views/profile.html',
+    controller: 'Profile.Controller'
   });
 })
 
@@ -52,13 +56,6 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
     if(!message) {
       return;
     }
-    // $scope.activeProject.tasks.push({
-    //   title: task.title
-    // });
-    // var recipient = {
-    //   name: 'Stewart',
-    //   phone: '15157080626'
-    // };
 
     var smsRef = new Firebase('https://soccersubs.firebaseio.com/sms/');
     var smsQueue = $firebaseArray(smsRef);
@@ -85,5 +82,15 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
 
   $scope.logUserOut = function() {
     $state.go('login');
+  };
+
+  $scope.viewUserProfile = function() {
+    $state.go('profile');
+  };
+})
+
+.controller('Profile.Controller', function($scope, $firebaseArray, $state) {
+  $scope.goHome = function() {
+    $state.go('home');
   };
 })

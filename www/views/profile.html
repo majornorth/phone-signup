@@ -1,0 +1,66 @@
+<ion-pane ng-controller="Profile.Controller">
+  <ion-header-bar class="bar-stable">
+    <h1 class="title">Your Profile</h1>
+    <button class="button button-icon icon ion-android-close" ng-click="goHome();">
+    </button>
+  </ion-header-bar>
+  <ion-content>
+    <div class="item item-image profile-image">
+        <a href="#" ng-click="logUserOut()"><img src="img/logo.png"></a>
+    </div>
+
+    <div class="list">
+      <label class="item item-input">
+        <span class="input-label">First Name</span>
+        <input type="text">
+      </label>
+
+      <label class="item item-input">
+        <span class="input-label">Last Name</span>
+        <input type="password">
+      </label>
+
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Position
+        </div>
+        <select>
+          <option>Defender</option>
+          <option selected>Center Midfielder</option>
+          <option>Winger</option>
+          <option>Goalkeeper</option>
+          <option>Striker</option>
+        </select>
+      </label>
+
+      <label class="item item-input item-select skill-level">
+        <div class="input-label">
+          Skill level
+        </div>
+        <select>
+          <option>Beginner</option>
+          <option selected>Recreational</option>
+          <option>Intermediate</option>
+          <option>Competitive</option>
+          <option>Division 1+</option>
+        </select>
+      </label>
+    </div>
+
+    <ul class="list">
+      <li class="item item-toggle">
+         Subscribe to SMS notifications
+         <label class="toggle toggle-positive">
+           <input type="checkbox">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </li>
+    </ul>
+
+    <button class="button button-full button-stable">
+      Logout
+    </button>
+  </ion-content>
+</ion-pane>

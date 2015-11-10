@@ -15,6 +15,10 @@
     color: white;
 }
 
+.skill-level {
+    border-top: 0;
+}
+
 /**
  * we are using flexbox for the layout
  */
