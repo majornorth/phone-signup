@@ -1,5 +1,9 @@
 /* Empty. Add your own CSS if you like */
 
+ion-content {
+    background-color: #f8f8f8;
+}
+
 .profile-image {
     width: 90px;
 }

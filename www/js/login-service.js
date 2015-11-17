@@ -35,7 +35,7 @@
                 var usersRef = new Firebase('https://soccersubs.firebaseio.com/users/');
                 var usersArray = $firebaseArray(usersRef);
 
-                var verificationCode = Math.floor(Math.random()*9999);
+                var verificationCode = Math.floor(Math.random()*9999) + 1000;
 
                 var number = getFormattedNumber();
 

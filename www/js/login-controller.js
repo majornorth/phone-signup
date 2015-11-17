@@ -51,7 +51,7 @@
       loginService.verifyConfirmationCode(vm.confirmationCode)
         .then(function() {
           $ionicLoading.hide();
-          return $state.go('home');
+          return $state.go('create-profile');
         },
         function() {
           $ionicLoading.hide();

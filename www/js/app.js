@@ -41,10 +41,23 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
     url: '/profile',
     templateUrl: 'views/profile.html',
     controller: 'Profile.Controller'
+  }).state('edit-profile', {
+    url: '/profile',
+    templateUrl: 'views/edit-profile.html',
+    controller: 'EditProfile.Controller'
+  }).state('create-profile', {
+    url: '/create-profile',
+    templateUrl: 'views/create-profile.html',
+    controller: 'CreateProfile.Controller'
   });
 })
 
 .controller('Sub.Controller', function($scope, $ionicModal, $firebaseArray, $state) {
+  var usersRef = new Firebase('https://soccersubs.firebaseio.com/users/');
+  var subs = $firebaseArray(usersRef);
+
+  $scope.subs = subs;
+
   // Create modal
   $ionicModal.fromTemplateUrl('new-message.html', function(modal) {
     $scope.messageModal = modal;
@@ -80,10 +93,6 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
     $scope.messageModal.hide();
   }
 
-  $scope.logUserOut = function() {
-    $state.go('login');
-  };
-
   $scope.viewUserProfile = function() {
     $state.go('profile');
   };
@@ -92,5 +101,33 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
 .controller('Profile.Controller', function($scope, $firebaseArray, $state) {
   $scope.goHome = function() {
     $state.go('home');
+  };
+
+  $scope.logUserOut = function() {
+    $state.go('login');
+  };
+
+  $scope.editProfile = function() {
+    $state.go('edit-profile');
+  };
+})
+
+.controller('EditProfile.Controller', function($scope, $firebaseArray, $state) {
+  console.log('hello edit profile');
+
+  $scope.backToProfile = function() {
+    $state.go('profile');
+  };
+})
+
+.controller('CreateProfile.Controller', function($scope, $firebaseArray, $state) {
+  console.log('hello create profile');
+
+  $scope.goHome = function() {
+    $state.go('home');
+  };
+
+  $scope.logUserOut = function() {
+    $state.go('login');
   };
 })
