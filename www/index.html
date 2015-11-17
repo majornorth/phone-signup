@@ -35,9 +35,9 @@
       <div class="modal">
 
         <!-- Modal header bar -->
-        <ion-header-bar class="bar-secondary">
+        <ion-header-bar class="bar-secondary bar-positive">
+          <button class="button button-clear" ng-click="closeNewMessage()">Cancel</button>
           <h1 class="title">Ask to sub</h1>
-          <button class="button button-clear button-positive" ng-click="closeNewMessage()">Cancel</button>
         </ion-header-bar>
 
         <!-- Modal content area -->
@@ -46,7 +46,7 @@
           <form ng-submit="createMessage(message)">
             <div class="list">
               <label class="item item-input">
-                <input type="text" placeholder="Asking for a sub? Let them know game location, time, competition level, and what color shirt they need." ng-model="message.content">
+                <textarea type="text" rows="6" class="ask-to-sub" placeholder="Let them know game location, time, skill level, and what color shirt they need." ng-model="message.content"></textarea>
               </label>
             </div>
             <div class="padding">

@@ -1,11 +1,53 @@
 /* Empty. Add your own CSS if you like */
 
-ion-content {
+ion-content.subs-feed {
     background-color: #f8f8f8;
 }
 
+ion-content.profile,
+ion-content.edit-profile {
+    background-color: #f8f8f8;
+}
+
+/*.subs-feed .card {
+    float: left;
+}
+*/
 .profile-image {
-    width: 90px;
+    width: 100%;
+}
+
+.profile-image img {
+    max-width: 90px;
+}
+
+.create-profile .profile-image,
+.edit-profile .profile-image {
+    margin: 10px 0;
+}
+
+.edit-profile .profile-image {
+    background-color: #f8f8f8;
+}
+
+.profile .profile-details {
+    border-top: none;
+    text-align: center;
+}
+
+.profile .profile-about {
+    border-bottom: none;
+    text-align: center;
+}
+
+.sub-details {
+    border-top: none;
+    text-align: center;
+}
+
+.sub-about {
+    border-bottom: none;
+    text-align: center;
 }
 
 .item.profile-image {
@@ -21,6 +63,10 @@ ion-content {
 
 .skill-level {
     border-top: 0;
+}
+
+textarea.ask-to-sub {
+    resize: none;
 }
 
 /**
