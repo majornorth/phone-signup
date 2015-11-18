@@ -5,9 +5,9 @@
         .module('starter')
         .service('loginService', loginService);
 
-    loginService.$inject = ['$q', '$timeout', '$window', '$firebaseArray'];
+    loginService.$inject = ['$q', '$timeout', '$window', '$firebaseArray', 'CurrentUserId'];
 
-    function loginService($q, $timeout, $window, $firebaseArray) {
+    function loginService($q, $timeout, $window, $firebaseArray, CurrentUserId) {
 
         var phonenumber;
         var countryCode;
@@ -72,6 +72,12 @@
                       // create a new account
                       var cleanNum = number.replace(/[^a-zA-Z0-9 ]/g, "");
                       var userId = '%2B' + cleanNum;
+
+                      // Update CurrentUserId service
+                      CurrentUserId.phoneNumber = userId;
+
+                      console.log(CurrentUserId.phoneNumber);
+
                       var newUserUrl = 'https://soccersubs.firebaseio.com/users/' + userId;
                       var newUserRef = new Firebase(newUserUrl);
 

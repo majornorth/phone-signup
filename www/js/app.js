@@ -53,6 +53,8 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
 })
 
 .controller('Sub.Controller', function($scope, $ionicModal, $firebaseArray, $state) {
+  
+  // Move three lines below into a service
   var usersRef = new Firebase('https://soccersubs.firebaseio.com/users/');
   var subs = $firebaseArray(usersRef);
 
@@ -120,7 +122,13 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
   };
 })
 
-.controller('CreateProfile.Controller', function($scope, $firebaseArray, $state) {
+.service('CurrentUserId', function() {
+    return {
+        phoneNumber: ''
+    }
+})
+
+.controller('CreateProfile.Controller', function($scope, $firebaseArray, $state, CurrentUserId) {
   console.log('hello create profile');
 
   $scope.goHome = function() {
@@ -130,4 +138,36 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
   $scope.logUserOut = function() {
     $state.go('login');
   };
+
+  $scope.newUserObject = {
+    firstName: '',
+    lastName: '',
+    photo: '',
+    position: '',
+    skill: ''
+  };
+
+  $scope.createUser = function() {
+    var firstNameValue = $scope.newUserObject.firstName.trim();
+    if (!firstNameValue.length) {
+      return;
+    }
+
+    console.log(CurrentUserId.phoneNumber);
+
+    // Need to call the userId service
+    var userId = CurrentUserId.phoneNumber;
+
+    var userRef = new Firebase('https://soccersubs.firebaseio.com/users/' + userId);
+
+    console.log(firstNameValue);
+
+    var firstNameValue = $scope.newUserObject.firstName;
+
+    userRef.update({
+      firstName: firstNameValue
+    });
+
+    $state.go('home');
+  }
 })
