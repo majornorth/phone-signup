@@ -17,6 +17,7 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
     }
   });
 })
+
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/login');
 
@@ -52,13 +53,28 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
   });
 })
 
-.controller('Sub.Controller', function($scope, $ionicModal, $firebaseArray, $state) {
+.service('CurrentUserId', function() {
+    return {
+        phoneNumber: '%2B15157080626',
+        exists: 'yes'
+    }
+})
+
+.controller('Sub.Controller', function($scope, $ionicModal, $firebaseArray, $state, CurrentUserId) {
   
   // Move three lines below into a service
   var usersRef = new Firebase('https://soccersubs.firebaseio.com/users/');
   var subs = $firebaseArray(usersRef);
 
   $scope.subs = subs;
+
+  // Get current user number and remove url entity
+  var number = CurrentUserId.phoneNumber;
+  var onlyDigits = number.replace(/\D/g,'');
+  var cleanNum = onlyDigits.substr(1);
+  var userId = '+' + cleanNum;
+
+  $scope.currentUserId = userId;
 
   // Create modal
   $ionicModal.fromTemplateUrl('new-message.html', function(modal) {
@@ -100,7 +116,7 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
   };
 })
 
-.controller('Profile.Controller', function($scope, $firebaseArray, $state) {
+.controller('Profile.Controller', function($scope, $firebaseArray, $state, CurrentUserId) {
   $scope.goHome = function() {
     $state.go('home');
   };
@@ -112,25 +128,40 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
   $scope.editProfile = function() {
     $state.go('edit-profile');
   };
+
+
+  // Move code for retrieving current user values into service
+  var userId = CurrentUserId.phoneNumber;
+  var userIdUrl = 'https://soccersubs.firebaseio.com/users/' + userId;
+  var userRef = new Firebase(userIdUrl);
+  
+  userRef.on("value", function(snapshot) {
+    var userValues = snapshot.val();
+    $scope.userValues = userValues;
+  }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
 })
 
-.controller('EditProfile.Controller', function($scope, $firebaseArray, $state) {
-  console.log('hello edit profile');
-
+.controller('EditProfile.Controller', function($scope, $firebaseArray, $state, CurrentUserId) {
   $scope.backToProfile = function() {
     $state.go('profile');
   };
-})
 
-.service('CurrentUserId', function() {
-    return {
-        phoneNumber: ''
-    }
+  // Move code for retrieving current user values into service
+  var userId = CurrentUserId.phoneNumber;
+  var userIdUrl = 'https://soccersubs.firebaseio.com/users/' + userId;
+  var userRef = new Firebase(userIdUrl);
+  
+  userRef.on("value", function(snapshot) {
+    var userValues = snapshot.val();
+    $scope.userValues = userValues;
+  }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
 })
 
 .controller('CreateProfile.Controller', function($scope, $firebaseArray, $state, CurrentUserId) {
-  console.log('hello create profile');
-
   $scope.goHome = function() {
     $state.go('home');
   };
@@ -153,19 +184,23 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
       return;
     }
 
-    console.log(CurrentUserId.phoneNumber);
-
-    // Need to call the userId service
     var userId = CurrentUserId.phoneNumber;
 
-    var userRef = new Firebase('https://soccersubs.firebaseio.com/users/' + userId);
-
-    console.log(firstNameValue);
+    var userIdUrl = 'https://soccersubs.firebaseio.com/users/' + userId;
+    var userRef = new Firebase(userIdUrl);
 
     var firstNameValue = $scope.newUserObject.firstName;
+    var lastNameValue = $scope.newUserObject.lastName;
+    var skillValue = $scope.newUserObject.skill;
+    var positionValue = $scope.newUserObject.position;
 
     userRef.update({
-      firstName: firstNameValue
+      firstName: firstNameValue,
+      lastName: lastNameValue,
+      location: 'San Francisco',
+      position: positionValue,
+      photo: 'http://www.wallstreetotc.com/wp-content/uploads/2014/10/facebook-anonymous-app.jpg',
+      skill: skillValue
     });
 
     $state.go('home');

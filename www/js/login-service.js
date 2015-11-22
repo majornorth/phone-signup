@@ -50,7 +50,6 @@
 
                 function userExistsCallback(number, exists) {
                     if (exists) {
-
                         //Abstract below into service
                         var cleanNum = number.replace(/[^a-zA-Z0-9 ]/g, "");
                         var userId = '%2B' + cleanNum;
@@ -68,7 +67,11 @@
                             phone: number,
                             verificationCode: verificationCode
                         });
+                        CurrentUserId.phoneNumber = userId;
+                        CurrentUserId.exists = 'yes';
                     } else {
+                        console.log(exists);
+                        debugger;
                       // create a new account
                       var cleanNum = number.replace(/[^a-zA-Z0-9 ]/g, "");
                       var userId = '%2B' + cleanNum;
@@ -76,7 +79,7 @@
                       // Update CurrentUserId service
                       CurrentUserId.phoneNumber = userId;
 
-                      console.log(CurrentUserId.phoneNumber);
+                      // console.log(CurrentUserId.phoneNumber);
 
                       var newUserUrl = 'https://soccersubs.firebaseio.com/users/' + userId;
                       var newUserRef = new Firebase(newUserUrl);
@@ -96,6 +99,10 @@
                           phone: number,
                           verificationCode: verificationCode
                       });
+
+                      CurrentUserId.exists = 'no';
+                      console.log(CurrentUserId.exists);
+                      debugger;
                     }
                 }
 

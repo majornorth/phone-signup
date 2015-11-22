@@ -5,17 +5,17 @@
     </button>
   </ion-header-bar>
   <ion-content class="profile">
-    <div class="card">
+    <div class="card" ng-click="">
       <div class="item">
         <div class="item item-image profile-image">
-            <a href="#" ng-click=""><img src="https://s3.amazonaws.com/f.cl.ly/items/3s0t3m2f0h2q0D0s0z1P/model-003.jpg"></a>
+            <a href="#"><img src="{{userValues.photo}}"></a>
         </div>
         <div class="item profile-details">
-            <h2>Stewart McCoy</h2>
+            <h2>{{userValues.firstName}}&nbsp;{{userValues.lastName}}</h2>
             <h3>San Francisco</h3>
-            <p>Competitive Winger</p>
+            <p>{{userValues.skill}}&nbsp;{{userValues.position}}</p>
         </div>
-        <div class="item item-text-wrap profile-about">I'm free to sub in men's or coed competitive games on Tuesday or Thursday nights.</div>
+        <div class="item item-text-wrap profile-about">{{userValues.about}}</div>
         <button class="button button-block button-stable" ng-click="editProfile()">
           Edit Profile
         </button>
@@ -26,7 +26,7 @@
       <li class="item item-toggle">
          SMS notifications
          <label class="toggle toggle-positive">
-           <input type="checkbox">
+           <input type="checkbox" checked>
            <div class="track">
              <div class="handle"></div>
            </div>
@@ -34,7 +34,7 @@
       </li>
     </ul>
 
-    <button class="button button-full button-dark" ng-click="logUserOut">
+    <button class="button button-full button-dark" ng-click="logUserOut()">
       Logout
     </button>
   </ion-content>

@@ -5,9 +5,9 @@
     .module('starter')
     .controller('LoginController', LoginController);
 
-  LoginController.$inject = ['$scope', '$state', '$ionicActionSheet', '$ionicModal', '$ionicLoading', 'loginService'];
+  LoginController.$inject = ['$scope', '$state', '$ionicActionSheet', '$ionicModal', '$ionicLoading', 'loginService', 'CurrentUserId'];
 
-  function LoginController($scope, $state, $ionicActionSheet, $ionicModal, $ionicLoading, loginService) {
+  function LoginController($scope, $state, $ionicActionSheet, $ionicModal, $ionicLoading, loginService, CurrentUserId) {
 
     var vm = this;
 
@@ -51,7 +51,11 @@
       loginService.verifyConfirmationCode(vm.confirmationCode)
         .then(function() {
           $ionicLoading.hide();
-          return $state.go('create-profile');
+          if (CurrentUserId.exists === 'yes') {
+            return $state.go('home');
+          } else {
+            return $state.go('create-profile');
+          }
         },
         function() {
           $ionicLoading.hide();

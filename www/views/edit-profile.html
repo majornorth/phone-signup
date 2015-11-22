@@ -6,17 +6,17 @@
   </ion-header-bar>
   <ion-content class="edit-profile">
     <div class="item item-image profile-image">
-        <a href="#" ng-click=""><img src="https://s3.amazonaws.com/f.cl.ly/items/3s0t3m2f0h2q0D0s0z1P/model-003.jpg"></a>
+        <a href="#" ng-click=""><img src="{{userValues.photo}}"></a>
     </div>
 
     <div class="list">
       <label class="item item-input">
-        <span class="input-label">First Name</span>
+        <span class="input-label">{{userValues.firstName}}</span>
         <input type="text" value="Stewart">
       </label>
 
       <label class="item item-input">
-        <span class="input-label">Last Name</span>
+        <span class="input-label">{{userValues.lastName}}</span>
         <input type="text" value="McCoy">
       </label>
 

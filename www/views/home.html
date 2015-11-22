@@ -5,7 +5,8 @@
     <h1 class="title">SoccerSubs</h1>
   </ion-header-bar>
   <ion-content class="subs-feed">
-    <div class="card" ng-repeat="sub in subs">
+    <!-- Consider setting up custom filter instead of using ng-if -->
+    <div class="card" ng-repeat="sub in subs" ng-if="sub.$id!=currentUserId">
       <div class="item">
         <div class="item item-image profile-image">
             <img src="{{sub.photo}}">
