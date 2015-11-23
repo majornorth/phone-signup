@@ -60,6 +60,24 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
     }
 })
 
+.factory('Camera', ['$q', function($q) {
+
+  return {
+    getPicture: function(options) {
+      var q = $q.defer();
+
+      navigator.camera.getPicture(function(result) {
+        // Do any magic you need
+        q.resolve(result);
+      }, function(err) {
+        q.reject(err);
+      }, options);
+
+      return q.promise;
+    }
+  }
+}])
+
 .controller('Sub.Controller', function($scope, $ionicModal, $firebaseArray, $state, CurrentUserId) {
   
   // Move three lines below into a service
@@ -143,7 +161,7 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
   });
 })
 
-.controller('EditProfile.Controller', function($scope, $firebaseArray, $state, CurrentUserId) {
+.controller('EditProfile.Controller', function($scope, $firebaseArray, $state, CurrentUserId, Camera) {
   $scope.backToProfile = function() {
     $state.go('profile');
   };
@@ -159,9 +177,19 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
   }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
   });
+
+  $scope.getPhoto = function() {
+    Camera.getPicture().then(function(imageURI) {
+      userRef.update({
+          imageURI: imageURI
+      });
+    }, function(err) {
+      console.err(err);
+    });
+  };
 })
 
-.controller('CreateProfile.Controller', function($scope, $firebaseArray, $state, CurrentUserId) {
+.controller('CreateProfile.Controller', function($scope, $firebaseArray, $state, CurrentUserId, Camera) {
   $scope.goHome = function() {
     $state.go('home');
   };

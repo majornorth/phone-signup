@@ -6,7 +6,8 @@
   </ion-header-bar>
   <ion-content class="edit-profile">
     <div class="item item-image profile-image">
-        <a href="#" ng-click=""><img src="{{userValues.photo}}"></a>
+        <a href="#"><img src="{{userValues.photo}}"></a>
+        <button ng-click="getPhoto()" class="button button-block button-primary">Update Photo</button>
     </div>
 
     <div class="list">
