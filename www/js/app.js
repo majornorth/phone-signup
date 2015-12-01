@@ -3,15 +3,15 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
+angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
+    // if(window.cordova && window.cordova.plugins.Keyboard) {
+    //   cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    // }
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
@@ -60,7 +60,7 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
     }
 })
 
-.factory('Camera', ['$q', function($q) {
+.factory('CameraFactory', ['$q', function($q) {
 
   return {
     getPicture: function(options) {
@@ -79,7 +79,7 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
 }])
 
 .controller('Sub.Controller', function($scope, $ionicModal, $firebaseArray, $state, CurrentUserId) {
-  
+
   // Move three lines below into a service
   var usersRef = new Firebase('https://soccersubs.firebaseio.com/users/');
   var subs = $firebaseArray(usersRef);
@@ -152,7 +152,7 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
   var userId = CurrentUserId.phoneNumber;
   var userIdUrl = 'https://soccersubs.firebaseio.com/users/' + userId;
   var userRef = new Firebase(userIdUrl);
-  
+
   userRef.on("value", function(snapshot) {
     var userValues = snapshot.val();
     $scope.userValues = userValues;
@@ -161,7 +161,7 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
   });
 })
 
-.controller('EditProfile.Controller', function($scope, $firebaseArray, $state, CurrentUserId, Camera) {
+.controller('EditProfile.Controller', function($scope, $firebaseArray, $state, CurrentUserId, CameraFactory) {
   $scope.backToProfile = function() {
     $state.go('profile');
   };
@@ -170,7 +170,7 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
   var userId = CurrentUserId.phoneNumber;
   var userIdUrl = 'https://soccersubs.firebaseio.com/users/' + userId;
   var userRef = new Firebase(userIdUrl);
-  
+
   userRef.on("value", function(snapshot) {
     var userValues = snapshot.val();
     $scope.userValues = userValues;
@@ -179,13 +179,42 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase'])
   });
 
   $scope.getPhoto = function() {
-    Camera.getPicture().then(function(imageURI) {
+    CameraFactory.getPicture({
+      quality: 75,
+      targetWidth: 90,
+      targetHeight: 90,
+      saveToPhotoAlbum: false,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: 1,
+      encodingType: 0
+    }).then(function(imageData) {
       userRef.update({
-          imageURI: imageURI
+          photo: "data:image/jpeg;base64," + imageData
       });
     }, function(err) {
       console.err(err);
     });
+
+    // var options = {
+    //     quality: 75,
+        // destinationType: Camera.DestinationType.DATA_URL,
+        // sourceType: Camera.PictureSourceType.CAMERA,
+    //     allowEdit: false,
+    //     encodingType: Camera.EncodingType.JPEG,
+    //     popoverOptions: CameraPopoverOptions,
+    //     targetWidth: 500,
+    //     targetHeight: 500,
+    //     saveToPhotoAlbum: false,
+    //     cameraDirection: FRONT
+    // };
+
+    // Camera.getPicture(options).then(function(imageData) {
+    //   userRef.update({
+    //       imageData: imageData
+    //   });
+    // }, function(err) {
+    //   console.err(err);
+    // });
   };
 })
 
