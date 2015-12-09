@@ -13,105 +13,31 @@
     <div class="list">
       <label class="item item-input">
         <span class="input-label">First Name</span>
-        <input type="text" value="{{userValues.firstName}}">
+        <input type="text" value="{{userValues.firstName}}" ng-model="firstName">
       </label>
 
       <label class="item item-input">
         <span class="input-label">Last Name</span>
-        <input type="text" value="{{userValues.lastName}}">
+        <input type="text" value="{{userValues.lastName}}" ng-model="lastName">
       </label>
 
-      <div class="item item-divider">
-          Position
-        </div>
-
-        <label class="item item-radio">
-          <input type="radio" name="position-group" ng-model="newUserObject.position" value="Defender">
-          <div class="item-content">
-            Defender
-          </div>
-          <i class="radio-icon ion-checkmark"></i>
-        </label>
-
-        <label class="item item-radio">
-          <input type="radio" name="position-group" ng-model="newUserObject.position" value="Midfielder">
-          <div class="item-content">
-            Midfielder
-          </div>
-          <i class="radio-icon ion-checkmark"></i>
-        </label>
-
-        <label class="item item-radio">
-          <input type="radio" name="position-group" ng-model="newUserObject.position" value="Winger">
-          <div class="item-content">
-            Winger
-          </div>
-          <i class="radio-icon ion-checkmark"></i>
-        </label>
-
-        <label class="item item-radio">
-          <input type="radio" name="position-group" ng-model="newUserObject.position" value="Striker">
-          <div class="item-content">
-            Striker
-          </div>
-          <i class="radio-icon ion-checkmark"></i>
-        </label>
-
-        <label class="item item-radio">
-          <input type="radio" name="position-group" ng-model="newUserObject.position" value="Goalkeeper">
-          <div class="item-content">
-            Goalkeeper
-          </div>
-          <i class="radio-icon ion-checkmark"></i>
-        </label>
-
-        <div class="item item-divider">
+      <label class="item item-input item-select">
+        <div class="input-label">
           Skill
         </div>
+        <select ng-model="selectedSkill" ng-options="skill for skill in skills"></select>
+      </label>
 
-        <label class="item item-radio">
-          <input type="radio" name="skill-group" ng-model="newUserObject.skill" value="Beginner">
-          <div class="item-content">
-            Beginner
-          </div>
-          <i class="radio-icon ion-checkmark"></i>
-        </label>
-
-        <label class="item item-radio">
-          <input type="radio" name="skill-group" ng-model="newUserObject.skill" value="Recreational">
-          <div class="item-content">
-            Recreational
-          </div>
-          <i class="radio-icon ion-checkmark"></i>
-        </label>
-
-        <label class="item item-radio">
-          <input type="radio" name="skill-group" ng-model="newUserObject.skill" value="Intermediate">
-          <div class="item-content">
-            Intermediate
-          </div>
-          <i class="radio-icon ion-checkmark"></i>
-        </label>
-
-        <label class="item item-radio">
-          <input type="radio" name="skill-group" ng-model="newUserObject.skill" value="Competitive">
-          <div class="item-content">
-            Competitive
-          </div>
-          <i class="radio-icon ion-checkmark"></i>
-        </label>
-
-        <label class="item item-radio">
-          <input type="radio" name="skill-group" ng-model="newUserObject.skill" value="Division 1%2B">
-          <div class="item-content">
-            Division 1+
-          </div>
-          <i class="radio-icon ion-checkmark"></i>
-        </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Position
+        </div>
+        <select ng-model="selectedPosition" ng-options="position for position in positions"></select>
+      </label>
 
     </div>
 
-    <button class="button button-block button-positive" ng-click="backToProfile()">
+    <button class="button button-block button-positive" ng-click="updateProfile(selectedPosition, selectedSkill, firstName, lastName)">
       Update Profile
     </button>
   </ion-content>

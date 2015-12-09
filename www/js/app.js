@@ -54,10 +54,10 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
 })
 
 .service('CurrentUserId', function() {
-    return {
-        phoneNumber: '%2B15157080626',
-        exists: 'yes'
-    }
+  return {
+    phoneNumber: '%2B15157080626',
+    exists: 'yes'
+  }
 })
 
 .factory('CameraFactory', ['$q', function($q) {
@@ -189,32 +189,32 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
       encodingType: 0
     }).then(function(imageData) {
       userRef.update({
-          photo: "data:image/jpeg;base64," + imageData
+        photo: "data:image/jpeg;base64," + imageData
       });
     }, function(err) {
       console.err(err);
     });
+  };
 
-    // var options = {
-    //     quality: 75,
-        // destinationType: Camera.DestinationType.DATA_URL,
-        // sourceType: Camera.PictureSourceType.CAMERA,
-    //     allowEdit: false,
-    //     encodingType: Camera.EncodingType.JPEG,
-    //     popoverOptions: CameraPopoverOptions,
-    //     targetWidth: 500,
-    //     targetHeight: 500,
-    //     saveToPhotoAlbum: false,
-    //     cameraDirection: FRONT
-    // };
+  $scope.positions = ['Defender', 'Midfielder','Winger','Striker','Goalkeeper'];
 
-    // Camera.getPicture(options).then(function(imageData) {
-    //   userRef.update({
-    //       imageData: imageData
-    //   });
-    // }, function(err) {
-    //   console.err(err);
-    // });
+  $scope.selectedPosition = $scope.userValues.position;
+
+  $scope.skills = ['Beginner', 'Recreational', 'Intermediate', 'Competitive', 'Division 1+'];
+
+  $scope.selectedSkill = $scope.userValues.skill;
+
+  $scope.firstName = $scope.userValues.firstName;
+
+  $scope.lastName = $scope.userValues.lastName;
+
+  $scope.updateProfile = function(selectedPosition, selectedSkill, firstName, lastName) {
+    userRef.update({
+      firstName: firstName,
+      lastName: lastName,
+      position: selectedPosition,
+      skill: selectedSkill
+    });
   };
 })
 
