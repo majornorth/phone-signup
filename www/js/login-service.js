@@ -87,6 +87,7 @@
                       newUserRef.set({
                         firstName: '',
                         lastName: '',
+                        photo: 'http://www.wallstreetotc.com/wp-content/uploads/2014/10/facebook-anonymous-app.jpg',
                         position: '',
                         skill: '',
                         verificationCode: verificationCode

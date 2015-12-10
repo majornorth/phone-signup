@@ -9,9 +9,10 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    // if(window.cordova && window.cordova.plugins.Keyboard) {
-    //   cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    // }
+    if(window.cordova && window.cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
+      cordova.plugins.Keyboard.disableScroll(true);
+    }
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
@@ -53,6 +54,8 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
   });
 })
 
+
+// Need to remove these defaults after development
 .service('CurrentUserId', function() {
   return {
     phoneNumber: '%2B15157080626',
@@ -174,19 +177,20 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
   userRef.on("value", function(snapshot) {
     var userValues = snapshot.val();
     $scope.userValues = userValues;
-  }, function (errorObject) {
+  }, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
   });
 
   $scope.getPhoto = function() {
     CameraFactory.getPicture({
-      quality: 75,
-      targetWidth: 90,
-      targetHeight: 90,
+      quality: 100,
+      targetWidth: 180,
+      targetHeight: 180,
       saveToPhotoAlbum: false,
       destinationType: Camera.DestinationType.DATA_URL,
-      sourceType: 1,
-      encodingType: 0
+      sourceType: Camera.PictureSourceType.CAMERA,
+      encodingType: Camera.EncodingType.JPEG,
+      cameraDirection: Camera.Direction.FRONT
     }).then(function(imageData) {
       userRef.update({
         photo: "data:image/jpeg;base64," + imageData
@@ -218,7 +222,7 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
   };
 })
 
-.controller('CreateProfile.Controller', function($scope, $firebaseArray, $state, CurrentUserId, Camera) {
+.controller('CreateProfile.Controller', function($scope, $firebaseArray, $state, CurrentUserId, CameraFactory) {
   $scope.goHome = function() {
     $state.go('home');
   };
@@ -230,9 +234,34 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
   $scope.newUserObject = {
     firstName: '',
     lastName: '',
-    photo: '',
+    photo: 'http://www.wallstreetotc.com/wp-content/uploads/2014/10/facebook-anonymous-app.jpg',
     position: '',
     skill: ''
+  };
+
+  var userId = CurrentUserId.phoneNumber;
+  var userIdUrl = 'https://soccersubs.firebaseio.com/users/' + userId;
+  var userRef = new Firebase(userIdUrl);
+
+  $scope.getPhoto = function() {
+    CameraFactory.getPicture({
+      quality: 100,
+      targetWidth: 180,
+      targetHeight: 180,
+      saveToPhotoAlbum: false,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      encodingType: Camera.EncodingType.JPEG,
+      cameraDirection: Camera.Direction.FRONT
+    }).then(function(imageData) {
+      // userRef.update({
+      //   photo: "data:image/jpeg;base64," + imageData
+      // });
+
+      $scope.newUserObject.photo = "data:image/jpeg;base64," + imageData;
+    }, function(err) {
+      console.err(err);
+    });
   };
 
   $scope.createUser = function() {
@@ -241,22 +270,17 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
       return;
     }
 
-    var userId = CurrentUserId.phoneNumber;
-
-    var userIdUrl = 'https://soccersubs.firebaseio.com/users/' + userId;
-    var userRef = new Firebase(userIdUrl);
-
     var firstNameValue = $scope.newUserObject.firstName;
     var lastNameValue = $scope.newUserObject.lastName;
     var skillValue = $scope.newUserObject.skill;
+    var photoValue = $scope.newUserObject.photo;
     var positionValue = $scope.newUserObject.position;
 
     userRef.update({
       firstName: firstNameValue,
       lastName: lastNameValue,
-      location: 'San Francisco',
+      photo: photoValue,
       position: positionValue,
-      photo: 'http://www.wallstreetotc.com/wp-content/uploads/2014/10/facebook-anonymous-app.jpg',
       skill: skillValue
     });
 

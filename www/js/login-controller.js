@@ -54,6 +54,7 @@
           if (CurrentUserId.exists === 'yes') {
             return $state.go('home');
           } else {
+            debugger;
             return $state.go('create-profile');
           }
         },

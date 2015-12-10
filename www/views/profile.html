@@ -7,12 +7,11 @@
   <ion-content class="profile">
     <div class="card" ng-click="">
       <div class="item">
-        <div class="item item-image profile-image">
-            <a href="#"><img src="{{userValues.photo}}"></a>
+        <div class="item item-image profile-image" style="width:90px;height:90px;overflow:hidden;margin:0 auto;">
+            <img src="{{userValues.photo}}">
         </div>
         <div class="item profile-details">
             <h2>{{userValues.firstName}}&nbsp;{{userValues.lastName}}</h2>
-            <h3>San Francisco</h3>
             <p>{{userValues.skill}}&nbsp;{{userValues.position}}</p>
         </div>
         <div class="item item-text-wrap profile-about">{{userValues.about}}</div>
@@ -24,7 +23,7 @@
 
     <ul class="list">
       <li class="item item-toggle">
-         SMS notifications
+         Receive direct texts
          <label class="toggle toggle-positive">
            <input type="checkbox" checked>
            <div class="track">

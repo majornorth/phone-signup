@@ -6,8 +6,12 @@
   </ion-header-bar>
   <ion-content class="create-profile">
     <form class="profile-form" novalidate ng-submit="createUser()">
-      <div class="item item-image profile-image">
-          <a href="#" ng-click=""><img src="http://www.wallstreetotc.com/wp-content/uploads/2014/10/facebook-anonymous-app.jpg"></a>
+      <div class="item item-image profile-image" style="width:90px;height:90px;overflow:hidden;margin-left:auto;margin-right:auto;">
+          <img src="{{newUserObject.photo}}">
+      </div>
+
+      <div>
+        <button ng-click="getPhoto()" class="button button-full button-primary">Update Photo</button>
       </div>
 
       <div class="list">
