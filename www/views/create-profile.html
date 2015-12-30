@@ -11,22 +11,22 @@
       </div>
 
       <div>
-        <button ng-click="getPhoto()" class="button button-full button-primary">Update Photo</button>
+        <button ng-click="getPhoto()" class="button button-full button-primary">Take Photo</button>
       </div>
 
       <div class="list">
         <label class="item item-input">
           <span class="input-label">First Name</span>
-          <input type="text" ng-model="newUserObject.firstName" required>
+          <input type="text" ng-model="newUserObject.firstName" placeholder="Kelley" required>
         </label>
 
         <label class="item item-input">
           <span class="input-label">Last Name</span>
-          <input type="text" ng-model="newUserObject.lastName" required>
+          <input type="text" ng-model="newUserObject.lastName" placeholder="O'Hara" required>
         </label>
 
         <div class="item item-divider">
-          Position
+          Select Your Position
         </div>
 
         <label class="item item-radio">
@@ -70,7 +70,7 @@
         </label>
 
         <div class="item item-divider">
-          Skill
+          Select Your Skill Level
         </div>
 
         <label class="item item-radio">
@@ -115,8 +115,8 @@
 
       </div>
 
-      <button class="button button-block button-positive">
-        Save Profile
+      <button class="button button-full button-positive">
+        Create Profile
       </button>
     </form>
   </ion-content>

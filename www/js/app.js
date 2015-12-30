@@ -60,6 +60,8 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
   return {
     phoneNumber: '%2B15157080626',
     exists: 'yes'
+    // phoneNumber: '',
+    // exists: ''
   }
 })
 

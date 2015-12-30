@@ -2,13 +2,13 @@
   <ion-content scroll="false">
     <div class="login-container">
       <div class="login-top">
-        <img src="img/logo.png" />
+        <!-- <img src="img/logo.png" /> -->
         <div class="list">
           <h3>Verify phone.</h3>
           <p>We texted a code to <b>{{ vm.getFormattedNumber() }}</b>. Enter it below to finish signup.</p>
           <form name="confirmationForm" ng-submit="vm.verifyConfirmationCode()">
             <label class="item item-input item-code">
-              <input type="number" ng-model="vm.confirmationCode" required placeholder="Verification code" ng-minlength="4">
+              <input type="number" ng-model="vm.confirmationCode" required placeholder="Verification code" ng-minlength="4" pattern="[0-9]*">
             </label>
             <button class="button button-block button-outline button-light" type="submit" ng-disabled="confirmationForm.$invalid">
                 VERIFY

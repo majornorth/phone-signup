@@ -7,12 +7,13 @@
   <ion-content class="profile">
     <div class="card" ng-click="">
       <div class="item">
-        <div class="item item-image profile-image" style="width:90px;height:90px;overflow:hidden;margin:0 auto;">
+        <div class="item item-image profile-image">
             <img src="{{userValues.photo}}">
         </div>
         <div class="item profile-details">
             <h2>{{userValues.firstName}}&nbsp;{{userValues.lastName}}</h2>
-            <p>{{userValues.skill}}&nbsp;{{userValues.position}}</p>
+            <p class="ion-ios-football">{{userValues.skill}}&nbsp;{{userValues.position}}</p>
+            <p class="ion-ios-location">Tendernob</p>
         </div>
         <div class="item item-text-wrap profile-about">{{userValues.about}}</div>
         <button class="button button-block button-stable" ng-click="editProfile()">
@@ -21,9 +22,9 @@
       </div>
     </div>
 
-    <ul class="list">
+<!--     <ul class="list">
       <li class="item item-toggle">
-         Receive direct texts
+         Users can text me
          <label class="toggle toggle-positive">
            <input type="checkbox" checked>
            <div class="track">
@@ -31,7 +32,9 @@
            </div>
          </label>
       </li>
-    </ul>
+    </ul> -->
+
+    <ion-toggle class="toggle-texts" ng-model="texts">Users can text me</ion-toggle>
 
     <button class="button button-full button-dark" ng-click="logUserOut()">
       Logout
