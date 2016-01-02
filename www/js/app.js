@@ -20,11 +20,24 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/app/intro');
 
   $stateProvider.state('home', {
     url: '/',
     templateUrl: 'views/home.html'
+  }).state('app', {
+    url: '/app',
+    abstract: true,
+    templateUrl: 'templates/menu.html',
+    controller: 'AppCtrl'
+  }).state('app.intro', {
+    url: '/intro',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/tab-intro.html',
+        controller: 'IntroCtrl'
+      }
+    }
   }).state('login', {
     url: '/login',
     templateUrl: 'views/login.html',
@@ -82,6 +95,30 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
     }
   }
 }])
+
+.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+})
+
+// This controls the walkthrough functionality
+.controller('IntroCtrl', function($scope, $state, $ionicSlideBoxDelegate) {
+
+  // Called to navigate to the main app
+  $scope.startApp = function() {
+    $state.go('login');
+  };
+  $scope.next = function() {
+    $ionicSlideBoxDelegate.next();
+  };
+  $scope.previous = function() {
+    $ionicSlideBoxDelegate.previous();
+  };
+
+  // Called each time the slide changes
+  $scope.slideChanged = function(index) {
+    $scope.slideIndex = index;
+  };
+
+})
 
 .controller('Sub.Controller', function($scope, $ionicModal, $firebaseArray, $state, CurrentUserId) {
 
