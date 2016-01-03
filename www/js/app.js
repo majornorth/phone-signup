@@ -28,8 +28,7 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
   }).state('app', {
     url: '/app',
     abstract: true,
-    templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
+    templateUrl: 'templates/menu.html'
   }).state('app.intro', {
     url: '/intro',
     views: {
