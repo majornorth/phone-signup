@@ -70,16 +70,12 @@
                         CurrentUserId.phoneNumber = userId;
                         CurrentUserId.exists = 'yes';
                     } else {
-                        console.log(exists);
-                        debugger;
                       // create a new account
                       var cleanNum = number.replace(/[^a-zA-Z0-9 ]/g, "");
                       var userId = '%2B' + cleanNum;
 
                       // Update CurrentUserId service
                       CurrentUserId.phoneNumber = userId;
-
-                      // console.log(CurrentUserId.phoneNumber);
 
                       var newUserUrl = 'https://soccersubs.firebaseio.com/users/' + userId;
                       var newUserRef = new Firebase(newUserUrl);
@@ -102,8 +98,6 @@
                       });
 
                       CurrentUserId.exists = 'no';
-                      console.log(CurrentUserId.exists);
-                      debugger;
                     }
                 }
 

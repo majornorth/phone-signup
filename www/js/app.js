@@ -20,7 +20,12 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/app/intro');
+  var intro = window.localStorage['viewedIntro'];
+  if (intro === 'true') {
+    $urlRouterProvider.otherwise('/');
+  } else {
+    $urlRouterProvider.otherwise('/app/intro');
+  }
 
   $stateProvider.state('home', {
     url: '/',
@@ -103,6 +108,7 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
 
   // Called to navigate to the main app
   $scope.startApp = function() {
+    window.localStorage['viewedIntro'] = 'true';
     $state.go('login');
   };
   $scope.next = function() {
@@ -175,13 +181,20 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
   };
 })
 
-.controller('Profile.Controller', function($scope, $firebaseArray, $state, CurrentUserId) {
+.controller('Profile.Controller', function($scope, $firebaseArray, $state, CurrentUserId, loginService) {
   $scope.goHome = function() {
     $state.go('home');
   };
 
   $scope.logUserOut = function() {
-    $state.go('login');
+    var intro = window.localStorage['viewedIntro'];
+    if (intro === 'true') {
+      loginService.setPhonenumber('');
+      $state.go('login');
+    } else {
+      loginService.phonenumber = '';
+      $state.go('app.intro');
+    }
   };
 
   $scope.editProfile = function() {

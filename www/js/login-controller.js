@@ -51,6 +51,7 @@
       loginService.verifyConfirmationCode(vm.confirmationCode)
         .then(function() {
           $ionicLoading.hide();
+          vm.confirmationCode = '';
           if (CurrentUserId.exists === 'yes') {
             return $state.go('home');
           } else {
