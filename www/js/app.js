@@ -148,17 +148,19 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
     scope: $scope
   });
 
-  $scope.createMessage = function(message) {
+  $scope.createMessage = function(message, sub) {
     if(!message) {
       return;
     }
+
+    var messageUserId = $scope.messageUserId
 
     var smsRef = new Firebase('https://soccersubs.firebaseio.com/sms/');
     var smsQueue = $firebaseArray(smsRef);
 
     smsQueue.$add({
       name: 'Stewart',
-      phone: '15157080626',
+      phone: messageUserId,
       text: message
     });
 
@@ -168,7 +170,8 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
   };
 
 
-  $scope.newMessage = function() {
+  $scope.newMessage = function(sub) {
+    $scope.messageUserId = sub;
     $scope.messageModal.show();
   };
 
