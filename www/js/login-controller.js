@@ -9,6 +9,8 @@
 
   function LoginController($scope, $state, $ionicActionSheet, $ionicModal, $ionicLoading, loginService, CurrentUserId) {
 
+    console.log(CurrentUserId);
+
     var vm = this;
 
     vm.sendConfirmationCode = sendConfirmationCode;
@@ -55,7 +57,6 @@
           if (CurrentUserId.exists === 'yes') {
             return $state.go('home');
           } else {
-            debugger;
             return $state.go('create-profile');
           }
         },

@@ -75,10 +75,10 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
 // Need to remove these defaults after development
 .service('CurrentUserId', function() {
   return {
-    phoneNumber: '%2B15157080626',
-    exists: 'yes'
-    // phoneNumber: '',
-    // exists: ''
+    phoneNumber: '',
+    exists: ''
+    // phoneNumber: '%2B12025550125',
+    // exists: 'yes'
   }
 })
 
@@ -100,6 +100,8 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
   }
 }])
 
+// Need this for the intro to work
+// Consider refactoring to remove at some point
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 })
 
@@ -126,6 +128,7 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
 })
 
 .controller('Sub.Controller', function($scope, $ionicModal, $firebaseArray, $state, CurrentUserId) {
+  console.log(CurrentUserId);
 
   // Move three lines below into a service
   var usersRef = new Firebase('https://soccersubs.firebaseio.com/users/');
@@ -148,25 +151,39 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
     scope: $scope
   });
 
-  $scope.createMessage = function(message, sub) {
+  $scope.createMessage = function(message) {
     if(!message) {
       return;
     }
 
-    var messageUserId = $scope.messageUserId
+    var messageUserId = $scope.messageUserId;
+
+    var fromUserId = $scope.currentUserId;
 
     var smsRef = new Firebase('https://soccersubs.firebaseio.com/sms/');
     var smsQueue = $firebaseArray(smsRef);
 
+    var messageSent = Date();
+    var messagesUrl = 'https://soccersubs.firebaseio.com/messages/' + messageUserId + '/' + fromUserId + '/' + messageSent;
+    var messagesRef = new Firebase(messagesUrl);
+    console.log(messagesUrl);
+
     smsQueue.$add({
-      name: 'Stewart',
+      messagingServiceSid: 'MG2402ffa2b596e76afd5d37e384546c6c',
       phone: messageUserId,
       text: message
     });
 
+    messagesRef.set({
+        messagingServiceSid: 'MG2402ffa2b596e76afd5d37e384546c6c',
+        text: message,
+      });
+
+    debugger;
+
     $scope.messageModal.hide();
 
-    message.content = "";
+    $scope.message = "";
   };
 
 
