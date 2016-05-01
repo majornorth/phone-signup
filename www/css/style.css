@@ -88,6 +88,15 @@
     border-color: #194e2a !important;
 }
 
+.bar.bar-light {
+    color: #194e2a;
+}
+
+.bar.bar-light .button,
+.bar.bar-light .title {
+    color: #194e2a;
+}
+
 .bar.bar-positive {
     background-image: none;
 }
@@ -105,34 +114,44 @@ ion-content.edit-profile {
     background-color: #f8f8f8;
 }
 
-.ion-ios-location:before,
-.ion-ios-football:before,
-.ion-star:before {
-    color: #194e2a;
-    font-size: 16px;
-    position: relative;
-    right: 3px;
+.sub-profile {
+    padding-left: 0;
+    padding-right: 0;
 }
 
-.ion-ios-location:before {
-    top: 1px;
+.ion-ios-location:before,
+.ion-ios-football:before,
+.ion-flash-off:before {
+    color: #194e2a;
+    font-size: 18px;
+    position: relative;
 }
 
 .ion-ios-football:before {
     margin-left: 5px;
+    margin-right: 7px;
+    right: 3px;
     top: 1px;
 }
 
-.ion-star:before {
-    top: 0;
+.ion-ios-location:before {
+    font-size: 21px;
+    left: 3px;
+    margin-right: 14px;
+    top: 1px;
+}
+
+.ion-flash-off:before {
+    margin-left: 1px;
+    margin-right: 9px;
 }
 
 .profile-image {
-    height:90px;
-    margin:0 auto;
-    overflow:hidden;
-    width: 90px;
-    width: 100%;
+    float: left;
+    height: 120px;
+    margin: 0 auto;
+    overflow: hidden;
+    width: 120px;
 }
 
 .profile-image img {
@@ -161,12 +180,22 @@ ion-content.edit-profile {
 
 .sub-details {
     border-top: none;
-    text-align: center;
+    float: left;
+    margin-left: 16px;
+}
+
+.sub-details h2{
+    margin-bottom: 12px;
+}
+
+.sub-details p {
+    margin-bottom: 6px;
 }
 
 .sub-about {
     border-bottom: none;
-    text-align: center;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .item.profile-image {

@@ -1,5 +1,5 @@
 <ion-pane ng-controller="Sub.Controller">
-  <ion-header-bar class="bar-positive">
+  <ion-header-bar class="bar-light">
     <button class="button button-icon icon ion-person" ng-click="viewUserProfile()">
     </button>
     <h1 class="title">SoccerSubs</h1>
@@ -8,13 +8,14 @@
     <!-- Consider setting up custom filter instead of using ng-if -->
     <div class="card" ng-repeat="sub in subs" ng-if="sub.$id!=currentUserId">
       <div class="item">
-        <div class="item item-image profile-image">
-            <img src="{{sub.photo}}">
-        </div>
-        <div class="item sub-details">
-            <h2>{{sub.firstName}}&nbsp;{{sub.lastName}}</h2>
-            <p class="ion-ios-football">{{sub.skill}}&nbsp;{{sub.position}}</p>
-            <p class="ion-ios-location">Tendernob</p>
+        <div class="item sub-profile">
+            <img class="profile-image" src="{{sub.photo}}">
+            <div class="sub-details">
+                <h2>{{sub.firstName}}&nbsp;{{sub.lastName}}</h2>
+                <p class="ion-flash-off skill-level">{{sub.skill}}</p>
+                <p class="ion-ios-football">{{sub.position}}</p>
+                <p class="ion-ios-location">Tendernob</p>
+            </div>
         </div>
         <div class="item item-text-wrap sub-about">{{sub.about}}</div>
         <button class="button button-block button-positive" ng-click="newMessage(sub.$id)">
