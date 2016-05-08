@@ -68,6 +68,10 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
     url: '/create-profile',
     templateUrl: 'views/create-profile.html',
     controller: 'CreateProfile.Controller'
+  }).state('direct-message', {
+    url: '/direct-message',
+    templateUrl: 'views/direct-message.html',
+    controller: 'DirectMessage.Controller'
   });
 })
 
@@ -79,6 +83,12 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
     exists: 'yes'
     // phoneNumber: '',
     // exists: ''
+  }
+})
+
+.service('MessageUser', function() {
+  return {
+    recipient: ''
   }
 })
 
@@ -125,7 +135,7 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
 
 })
 
-.controller('Sub.Controller', function($scope, $ionicModal, $firebaseArray, $state, CurrentUserId) {
+.controller('Sub.Controller', function($scope, $ionicModal, $firebaseArray, $state, CurrentUserId, MessageUser) {
 
   // Move three lines below into a service
   var usersRef = new Firebase('https://soccersubs.firebaseio.com/users/');
@@ -169,7 +179,6 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
     message.content = "";
   };
 
-
   $scope.newMessage = function(sub) {
     $scope.messageUserId = sub;
     $scope.messageModal.show();
@@ -177,12 +186,28 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
 
   $scope.closeNewMessage = function() {
     $scope.messageModal.hide();
-  }
+  };
+
+  $scope.messageUser = function(sub) {
+    MessageUser.recipient = sub;
+    $state.go('direct-message');
+  };
 
   $scope.viewUserProfile = function() {
     $state.go('profile');
   };
 })
+
+.controller('DirectMessage.Controller', ['$scope', '$state', 'CurrentUserId', 'MessageUser', function($scope, $state, CurrentUserId, MessageUser) {
+
+  $scope.logRecipient = function() {
+    console.log(MessageUser.recipient);
+  };
+
+  $scope.goHome = function() {
+    $state.go('home');
+  };
+}])
 
 .controller('Profile.Controller', function($scope, $firebaseArray, $state, CurrentUserId, loginService) {
   $scope.goHome = function() {
