@@ -212,7 +212,7 @@ ion-content.edit-profile {
     background-color: #f1f1f1;
     border-top: 0;
     border-radius: 4px;
-    color: #194e2a !important;
+    color: #333 !important;
     display: inline-block;
     margin: -7px 0 20px 0 !important;
     padding: 2px 9px;

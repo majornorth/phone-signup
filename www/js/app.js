@@ -79,10 +79,8 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
 // Need to remove these defaults after development
 .service('CurrentUserId', function() {
   return {
-    phoneNumber: '%2B15157080626',
-    exists: 'yes'
-    // phoneNumber: '',
-    // exists: ''
+    phoneNumber: '',
+    exists: ''
   }
 })
 
@@ -189,7 +187,16 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
   };
 
   $scope.messageUser = function(sub) {
-    MessageUser.recipient = sub;
+    // Get recipient user number and remove url entity
+    var number = sub;
+    var cleanNum = number.replace(/[^a-zA-Z0-9 ]/g, "");
+    var subId = '%2B' + cleanNum;
+
+    console.log("hey");
+    console.log(subId);
+
+    MessageUser.recipient = subId;
+
     $state.go('direct-message');
   };
 
@@ -198,10 +205,20 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
   };
 })
 
-.controller('DirectMessage.Controller', ['$scope', '$state', 'CurrentUserId', 'MessageUser', function($scope, $state, CurrentUserId, MessageUser) {
+.controller('DirectMessage.Controller', ['$scope', '$state', 'CurrentUserId', 'MessageUser', '$firebaseArray', function($scope, $state, CurrentUserId, MessageUser, $firebaseArray) {
+
+  console.log(MessageUser.recipient);
+
+  var fromId = CurrentUserId.phoneNumber;
+  var recipientId = MessageUser.recipient;
+
+  var messagesRef = new Firebase('https://soccersubs.firebaseio.com/messages/' + fromId + '/' + recipientId + '/');
+  var messageThread = $firebaseArray(messagesRef);
 
   $scope.logRecipient = function() {
-    console.log(MessageUser.recipient);
+    console.log(recipientId);
+    console.log(fromId);
+    console.log(messagesRef.toString());
   };
 
   $scope.goHome = function() {
