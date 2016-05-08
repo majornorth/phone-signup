@@ -120,8 +120,7 @@ ion-content.edit-profile {
 }
 
 .ion-ios-location:before,
-.ion-ios-football:before,
-.ion-flash-off:before {
+.ion-ios-football:before {
     color: #194e2a;
     font-size: 18px;
     position: relative;
@@ -139,11 +138,6 @@ ion-content.edit-profile {
     left: 3px;
     margin-right: 14px;
     top: 1px;
-}
-
-.ion-flash-off:before {
-    margin-left: 1px;
-    margin-right: 9px;
 }
 
 .profile-image {
@@ -211,7 +205,13 @@ ion-content.edit-profile {
 }
 
 .skill-level {
+    background-color: #f1f1f1;
     border-top: 0;
+    border-radius: 4px;
+    color: #194e2a !important;
+    display: inline-block;
+    margin: -7px 0 20px 0 !important;
+    padding: 2px 9px;
 }
 
 textarea.ask-to-sub {
