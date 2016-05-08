@@ -258,7 +258,7 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
 
   $scope.selectedPosition = $scope.userValues.position;
 
-  $scope.skills = ['Beginner', 'Recreational', 'Intermediate', 'Competitive', 'Division 1+'];
+  $scope.skills = ['Beginner', 'Recreational', 'Intermediate', 'Competitive', 'Premier'];
 
   $scope.selectedSkill = $scope.userValues.skill;
 

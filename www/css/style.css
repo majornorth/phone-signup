@@ -140,7 +140,8 @@ ion-content.edit-profile {
     top: 1px;
 }
 
-.profile-image {
+.subs-feed .profile-image,
+.profile .profile-image {
     float: left;
     height: 120px;
     margin: 0 auto;
@@ -148,18 +149,21 @@ ion-content.edit-profile {
     width: 120px;
 }
 
-.profile-image img {
-    border: 1px solid #eee;
-    max-width: 90px;
-}
-
-.create-profile .profile-image,
-.edit-profile .profile-image {
+.create-profile .profile-image {
     margin: 10px 0;
 }
 
 .edit-profile .profile-image {
     background-color: #f8f8f8;
+    max-height: 120px;
+    margin: 10px auto;
+    overflow: hidden;
+    width: 120px;
+}
+
+.profile-image img {
+    border: 1px solid #eee;
+    max-width: 120px;
 }
 
 .profile .profile-details {
