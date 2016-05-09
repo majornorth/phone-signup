@@ -1,4 +1,4 @@
-<ion-pane ng-controller="Sub.Controller">
+<ion-pane ng-controller="DirectMessage.Controller">
   <ion-header-bar class="bar-light">
     <button class="button button-icon icon ion-android-close" ng-click="goHome();">
     </button>
@@ -7,6 +7,13 @@
   <ion-content class="direct-messages">
     <div class="card" ng-click="logRecipient();">
       <p>Hi!</p>
+    </div>
+
+    <div id="message-form">
+        <input class="send-message" placeholder="Type a message..." ng-model="newMessage.contents" required type="text">
+        <button type="button" class="button button-block button-positive" ng-click="sendMessage()">
+            Send
+        </button>
     </div>
   </ion-content>
 </ion-pane>

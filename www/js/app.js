@@ -156,7 +156,7 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
     scope: $scope
   });
 
-  $scope.createMessage = function(message, sub) {
+  $scope.sendMessage = function(message) {
     if(!message) {
       return;
     }
@@ -177,14 +177,14 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
     message.content = "";
   };
 
-  $scope.newMessage = function(sub) {
-    $scope.messageUserId = sub;
-    $scope.messageModal.show();
-  };
+  // $scope.newMessage = function(sub) {
+  //   $scope.messageUserId = sub;
+  //   $scope.messageModal.show();
+  // };
 
-  $scope.closeNewMessage = function() {
-    $scope.messageModal.hide();
-  };
+  // $scope.closeNewMessage = function() {
+  //   $scope.messageModal.hide();
+  // };
 
   $scope.messageUser = function(sub) {
     // Get recipient user number and remove url entity
@@ -215,10 +215,31 @@ angular.module('starter', ['ionic', 'cwill747.phonenumber', 'firebase', 'ngCordo
   var messagesRef = new Firebase('https://soccersubs.firebaseio.com/messages/' + fromId + '/' + recipientId + '/');
   var messageThread = $firebaseArray(messagesRef);
 
+  $scope.newMessage = {
+      contents: ''
+  };
+
   $scope.logRecipient = function() {
     console.log(recipientId);
     console.log(fromId);
     console.log(messagesRef.toString());
+    console.log($scope.newMessage.contents);
+  };
+
+  var newMessage = $scope.newMessage.contents;
+
+  $scope.sendMessage = function() {
+    if(!newMessage) {
+      return;
+    }
+
+    console.log(newMessage);
+
+    messageThread.$add({
+      text: newMessage
+    });
+
+    $scope.newMessage.contents = '';
   };
 
   $scope.goHome = function() {
